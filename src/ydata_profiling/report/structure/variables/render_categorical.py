@@ -136,19 +136,20 @@ def render_categorical_unicode(
     for category_alias_name, category_alias_counts in sorted(
         summary["category_alias_char_counts"].items(), key=lambda x: -len(x[1])
     ):
-        category_alias_name = category_alias_name.replace("_", " ")
-        cats.append(
-            FrequencyTable(
-                freq_table(
-                    freqtable=category_alias_counts,
-                    n=_get_n(category_alias_counts),
-                    max_number_to_print=n_freq_table_max,
-                ),
-                name=f"{category_alias_name}",
-                anchor_id=f"{varid}category_alias_values_{category_alias_name}",
-                redact=config.vars.cat.redact,
+        if category_alias_name is not None:
+            category_alias_name = category_alias_name.replace("_", " ")
+            cats.append(
+                FrequencyTable(
+                    freq_table(
+                        freqtable=category_alias_counts,
+                        n=_get_n(category_alias_counts),
+                        max_number_to_print=n_freq_table_max,
+                    ),
+                    name=f"{category_alias_name}",
+                    anchor_id=f"{varid}category_alias_values_{category_alias_name}",
+                    redact=config.vars.cat.redact,
+                )
             )
-        )
 
     category_items = [
         category_overview,
